@@ -1,0 +1,4 @@
+init
+flash probe 0
+program has.elf 0 verify reset
+
