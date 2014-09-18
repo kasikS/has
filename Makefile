@@ -52,20 +52,15 @@ $(shell mkdir $(OBJ_DIR) > /dev/null 2>&1)
 
 .PHONY: lib proj
 
-all: lib proj
+#all: lib proj
+all: libstm32f4.a $(PROJECT_NAME).elf
 
-lib:
+#lib:
+libstm32f4.a:
 	$(MAKE) -C lib
-proj: $(PROJECT_NAME).elf
 
-#.PHONY: $(PROJECT_NAME)
-#$(PROJECT_NAME):	$(PROJECT_NAME).elf
+#proj: $(PROJECT_NAME).elf
 
-#.PHONY: all
-#all: $(PROJECT_NAME)
-
-#.PHONY: $(PROJECT_NAME)
-#$(PROJECT_NAME): $(PROJECT_NAME).elf
 
 $(PROJECT_NAME).elf: $(SRCS)
 	$(CC) $(INCLUDE) $(CFLAGS) $^ -o $@ -Llib -lstm32f4
@@ -81,5 +76,6 @@ clean:
 	rm -f $(PROJECT_NAME).hex
 	rm -f $(PROJECT_NAME).bin
 
-flash: $(PROJECT_NAME).elf
+#flash: $(PROJECT_NAME).elf
+flash: all
 	openocd -f interface/stlink-v2.cfg -f target/stm32f4x_stlink.cfg -f scripts/flash.cfg
